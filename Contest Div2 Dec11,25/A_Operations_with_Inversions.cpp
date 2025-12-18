@@ -1,28 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
+void solve() {
     int t;
     cin >> t;
-    
+
     while (t--) {
-        int n;
-        cin >> n;
-        int current_max = 0;
-        int operations = 0;
-        
-        for (int i = 0; i < n; i++) {
-            int x;
-            cin >> x;
-            
-            if (x < current_max) {
-                operations++;
+        int len;
+        cin >> len;
+
+        int maxSoFar = 0;
+        int cnt = 0;
+
+        for (int i = 0; i < len; i++) {
+            int val;
+            cin >> val;
+
+            if (val < maxSoFar) {
+                cnt++;
             } else {
-                current_max = x;
+                maxSoFar = val;
             }
         }
-        cout << operations << endl;
+
+        cout << cnt << '\n';
     }
-    
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    solve();
     return 0;
 }

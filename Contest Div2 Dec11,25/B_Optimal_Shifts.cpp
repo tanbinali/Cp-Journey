@@ -1,37 +1,39 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
+void solve() {
     int t;
-    if (cin >> t) {
-        while (t--) {
-            int n;
-            cin >> n;
-            string s;
-            cin >> s;
+    cin >> t;
 
-            string ss = s + s;
+    while (t--) {
+        int n;
+        cin >> n;
 
-            int max_zeros = 0;
-            int current_zeros = 0;
+        string str;
+        cin >> str;
 
-            for (char c : ss) {
-                if (c == '0') {
-                    current_zeros++;
-                } else {
-                    if (current_zeros > max_zeros) {
-                        max_zeros = current_zeros;
-                    }
-                    current_zeros = 0;
-                }
+        string doubled = str + str;
+
+        int best = 0, streak = 0;
+
+        for (char ch : doubled) {
+            if (ch == '0') {
+                ++streak;
+            } else {
+                best = max(best, streak);
+                streak = 0;
             }
-            
-            if (current_zeros > max_zeros) {
-                max_zeros = current_zeros;
-            }
-
-            cout << max_zeros << "\n";
         }
+
+        best = max(best, streak);
+        cout << best << '\n';
     }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    solve();
     return 0;
 }

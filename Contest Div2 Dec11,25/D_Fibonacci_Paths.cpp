@@ -1,51 +1,61 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
+static const long long MOD = 998244353;
+
+void solve() {
     int t;
-    if (cin >> t) {
-        while (t--) {
-            int n, m;
-            cin >> n >> m;
-            
-            vector<long long> a(n + 1);
-            for (int i = 1; i <= n; ++i) {
-                cin >> a[i];
-            }
-            
-            vector<pair<int, int>> edges(m);
+    cin >> t;
 
-            vector<int> p(m);
-            for (int i = 0; i < m; ++i) {
-                cin >> edges[i].first >> edges[i].second;
-                p[i] = i;
-            }
+    while (t--) {
+        int n, m;
+        cin >> n >> m;
 
-            sort(p.begin(), p.end(), [&](int i, int j) {
-                return a[edges[i].second] < a[edges[j].second];
-            });
-
-            vector<map<long long, int>> dp(n + 1);
-            long long ans = 0;
-            long long MOD = 998244353;
-
-            for (int i = 0; i < m; ++i) {
-                int idx = p[i];
-                int u = edges[idx].first;
-                int v = edges[idx].second;
-
-                long long current_ways = 1;
-                long long needed = a[v] - a[u];
-
-                if (dp[u].count(needed)) {
-                    current_ways = (current_ways + dp[u][needed]) % MOD;
-                }
-
-                ans = (ans + current_ways) % MOD;
-                dp[v][a[u]] = (dp[v][a[u]] + current_ways) % MOD;
-            }
-            cout << ans << endl;
+        vector<long long> val(n + 1);
+        for (int i = 1; i <= n; i++) {
+            cin >> val[i];
         }
+
+        vector<pair<int,int>> e(m);
+        for (int i = 0; i < m; i++) {
+            cin >> e[i].first >> e[i].second;
+        }
+
+        vector<int> order(m);
+        iota(order.begin(), order.end(), 0);
+
+        sort(order.begin(), order.end(),
+             [&](int x, int y) {
+                 return val[e[x].second] < val[e[y].second];
+             });
+
+        vector<unordered_map<long long, long long>> ways(n + 1);
+        long long result = 0;
+
+        for (int id : order) {
+            int from = e[id].first;
+            int to   = e[id].second;
+
+            long long add = 1;
+            long long diff = val[to] - val[from];
+
+            auto it = ways[from].find(diff);
+            if (it != ways[from].end()) {
+                add = (add + it->second) % MOD;
+            }
+
+            result = (result + add) % MOD;
+            ways[to][val[from]] = (ways[to][val[from]] + add) % MOD;
+        }
+
+        cout << result << '\n';
     }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    solve();
     return 0;
 }
