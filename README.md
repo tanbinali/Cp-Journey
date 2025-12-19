@@ -16,7 +16,7 @@ The codebase is organized to reflect my practice across different platforms:
 
 ## 🚀 Profiles & Stats
 
-* **Codeforces:** [tanbinali](https://codeforces.com/profile/tanbinali)
+* **Codeforces:** [mdtanbinali](https://codeforces.com/profile/mdtanbinali)
 
 ## 📝 Note
 
